@@ -1,2 +1,3 @@
-# medattend-pro-mbbs-academic-tracker
-Exported from Caffeine project: MedAttend Pro – MBBS Academic Tracker
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

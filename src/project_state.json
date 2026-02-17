@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Attendance system project: refine UI for displaying consecutive classes and address draft app stuck on \"initialising\" when opened.",
+  "architectural_notes": [],
+  "known_issues": [
+    "Draft app gets stuck showing \"initialising\" on open; app does not proceed/loading hangs"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-fix-the-startup-hang-where-the-app-remains-on-the-initializing-screen-by-making-indexeddb-initialization-resilient-and-always-completing-with-either-a-successful-ready-state-or-a-clear-error-state",
+      "title": "Fix the startup hang where the app remains on the “Initializing…” screen by making IndexedDB initialization resilient and always completing with either a successful ready state or a clear error state.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-refine-the-ui-for-displaying-consecutive-classes-in-the-today-s-schedule-experience-by-grouping-adjacent-timetable-entries-that-are-consecutive-periods-of-the-same-subject-and-type-and-presenting-them-as-a-single-grouped-item-with-clear-per-period-visibility",
+      "title": "Refine the UI for displaying consecutive classes in the “Today’s Schedule” experience by grouping adjacent timetable entries that are consecutive periods of the same subject and type, and presenting them as a single grouped item with clear per-period visibility.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Refine UI for how consecutive classes are displayed in the attendance system",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "projectName": "MedAttend Pro",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

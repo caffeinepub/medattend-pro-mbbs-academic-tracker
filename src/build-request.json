@@ -1,0 +1,62 @@
+{
+  "kind": "build_request",
+  "title": "Fix app stuck on “Initializing…” and refine consecutive classes display",
+  "projectName": "MedAttend Pro",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Fix the startup hang where the app remains on the “Initializing…” screen by making IndexedDB initialization resilient and always completing with either a successful ready state or a clear error state.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "I am facing an issue when I am opening the draft its only showing \"initialising\" only nothing happening"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When IndexedDB opens successfully, the app transitions from the “Initializing…” screen to the router-rendered UI within a reasonable time (no indefinite loading).",
+        "If IndexedDB initialization is blocked (e.g., another tab holds an older connection) or fails, the app shows a dedicated error UI (not a permanent “Initializing…” state) with user-facing English text explaining the issue.",
+        "The IndexedDB open flow handles blocked/upgrade scenarios (e.g., via open request blocked handling and versionchange handling) so users are not stuck without guidance.",
+        "Console errors include actionable context for debugging (e.g., whether the failure is blocked, open error, or upgrade error)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Refine the UI for displaying consecutive classes in the “Today’s Schedule” experience by grouping adjacent timetable entries that are consecutive periods of the same subject and type, and presenting them as a single grouped item with clear per-period visibility.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3",
+          "msg-4"
+        ],
+        "quotes": [
+          "If you’d like, we can refine how consecutive classes are displayed in the UI.",
+          "Yes you can refine it"
+        ]
+      },
+      "acceptanceCriteria": [
+        "In Today’s Schedule, consecutive periods (adjacent by time) with the same subject + type are visually grouped into one block instead of appearing as repetitive separate cards.",
+        "The grouped UI indicates how many consecutive periods are included (e.g., “2 periods”) and shows the combined time range.",
+        "Users can still see and manage attendance per individual class occurrence within the group (e.g., via expand/collapse, stacked sub-cards, or another clear interaction).",
+        "No day-wise bulk action is introduced; marking attendance affects only the selected class occurrence(s) inside that grouped block."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not edit files under frontend/src/components/ui (shadcn UI components); compose them from other components instead.",
+    "Do not edit immutable hook/bootstrapping paths listed in SYSTEM_CONTEXT (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, and frontend/src/components/ui).",
+    "Keep all backend logic within the single Motoko actor (backend/main.mo)."
+  ],
+  "nonGoals": [
+    "Adding new authentication providers beyond Internet Identity.",
+    "Introducing an external database or server-side persistence for attendance logs (attendance remains offline in IndexedDB).",
+    "Implementing real-time features (WebSockets/push notifications/chat)."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
