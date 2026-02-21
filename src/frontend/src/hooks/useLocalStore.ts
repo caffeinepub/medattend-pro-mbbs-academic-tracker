@@ -43,28 +43,24 @@ export function useClassLogs() {
     return unsubscribe;
   }, [refresh]);
 
-  const addLog = useCallback(async (log: ClassLog) => {
+  const addLog = useCallback(async (log: Omit<ClassLog, 'id'>) => {
     await db.addClassLog(log);
     emit('classLogs');
   }, []);
 
-  const addMultipleLogs = useCallback(async (logs: ClassLog[]) => {
+  const addMultipleLogs = useCallback(async (logs: Omit<ClassLog, 'id'>[]) => {
     await db.addMultipleClassLogs(logs);
     emit('classLogs');
   }, []);
 
   const updateLog = useCallback(async (log: ClassLog) => {
-    await db.updateClassLog(log);
+    await db.updateClassLog(log.id, log);
     emit('classLogs');
   }, []);
 
   const updateAttendanceStatus = useCallback(async (id: string, status: AttendanceStatus) => {
-    const allLogs = await db.getAllClassLogs();
-    const log = allLogs.find((l) => l.id === id);
-    if (log) {
-      await db.updateClassLog({ ...log, attendanceStatus: status });
-      emit('classLogs');
-    }
+    await db.updateClassLog(id, { attendanceStatus: status });
+    emit('classLogs');
   }, []);
 
   const deleteLog = useCallback(async (id: string) => {
@@ -99,13 +95,13 @@ export function useTimetable() {
     return unsubscribe;
   }, [refresh]);
 
-  const addEntry = useCallback(async (entry: TimetableEntry) => {
+  const addEntry = useCallback(async (entry: Omit<TimetableEntry, 'id'>) => {
     await db.addTimetableEntry(entry);
     emit('timetable');
   }, []);
 
   const updateEntry = useCallback(async (entry: TimetableEntry) => {
-    await db.updateTimetableEntry(entry);
+    await db.updateTimetableEntry(entry.id, entry);
     emit('timetable');
   }, []);
 

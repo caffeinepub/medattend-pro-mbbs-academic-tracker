@@ -1,57 +1,44 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T10:10:25.247Z",
+  "generatedAt": "2026-02-20T18:04:21.745Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 1,
+    "implemented": 1,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Fix the startup hang where the app remains on the “Initializing…” screen by making IndexedDB initialization resilient and always completing with either a successful ready state or a clear error state.",
+        "summary": "Investigate and fix the deployment error that occurred during the previous deployment attempt",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/storage/db.ts",
+          "frontend/src/hooks/useActor.ts",
+          "frontend/src/hooks/useInternetIdentity.ts",
+          "frontend/src/main.tsx",
+          "frontend/src/App.tsx",
           "frontend/src/components/DbInitGate.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/storage/db.ts"
         ],
         "matchedFiles": [
-          "frontend/src/storage/db.ts",
+          "frontend/src/App.tsx",
           "frontend/src/components/DbInitGate.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-2",
-        "summary": "Refine the UI for displaying consecutive classes in the “Today’s Schedule” experience by grouping adjacent timetable entries that are consecutive periods of the same subject and type, and presenting them as a single grouped item with clear per-period visibility.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/domain/groupConsecutiveTimetable.ts",
-          "frontend/src/components/attendance/ConsecutiveClassGroupCard.tsx",
-          "frontend/src/components/TodaySchedule.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/domain/groupConsecutiveTimetable.ts",
-          "frontend/src/components/attendance/ConsecutiveClassGroupCard.tsx",
-          "frontend/src/components/TodaySchedule.tsx"
+          "frontend/src/storage/db.ts"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
+    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/App.tsx",
     "frontend/src/components/DbInitGate.tsx",
-    "frontend/src/components/TodaySchedule.tsx",
-    "frontend/src/components/attendance/ConsecutiveClassGroupCard.tsx",
-    "frontend/src/domain/groupConsecutiveTimetable.ts",
+    "frontend/src/hooks/useLocalStore.ts",
     "frontend/src/storage/db.ts",
     "project_state.json",
     "scratch/component-selection.json",

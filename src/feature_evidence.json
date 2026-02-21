@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-startup-hang-where-the-app-remains-on-the-initializing-screen-by-making-indexeddb-initialization-resilient-and-always-completing-with-either-a-successful-ready-state-or-a-clear-error-state",
-      "featureTitle": "Fix the startup hang where the app remains on the “Initializing…” screen by making IndexedDB initialization resilient and always completing with either a successful ready state or a clear error state.",
+      "featureId": "feature-investigate-and-fix-the-deployment-error-that-occurred-during-the-previous-deployment-attempt",
+      "featureTitle": "Investigate and fix the deployment error that occurred during the previous deployment attempt",
       "files": [
         "frontend/src/App.tsx",
         "frontend/src/components/DbInitGate.tsx",
@@ -18,26 +18,6 @@
       ],
       "testIds": [
         "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-refine-the-ui-for-displaying-consecutive-classes-in-the-today-s-schedule-experience-by-grouping-adjacent-timetable-entries-that-are-consecutive-periods-of-the-same-subject-and-type-and-presenting-them-as-a-single-grouped-item-with-clear-per-period-visibility",
-      "featureTitle": "Refine the UI for displaying consecutive classes in the “Today’s Schedule” experience by grouping adjacent timetable entries that are consecutive periods of the same subject and type, and presenting them as a single grouped item with clear per-period visibility.",
-      "files": [
-        "frontend/src/components/TodaySchedule.tsx",
-        "frontend/src/components/attendance/ConsecutiveClassGroupCard.tsx",
-        "frontend/src/domain/groupConsecutiveTimetable.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
       ],
       "confidence": "high"
     }

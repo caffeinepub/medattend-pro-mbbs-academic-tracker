@@ -1,9 +1,9 @@
-// Database initialization gate with timeout and error handling
+// Database initialization gate with extended timeout and better error recovery
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { initDB } from '../storage/db';
 import { Button } from './ui/button';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { AlertCircle, RefreshCw, Database } from 'lucide-react';
 
 interface DbInitGateProps {
   children: ReactNode;
@@ -11,11 +11,12 @@ interface DbInitGateProps {
 
 type InitState = 'initializing' | 'ready' | 'error' | 'timeout';
 
-const INIT_TIMEOUT_MS = 10000; // 10 seconds
+const INIT_TIMEOUT_MS = 15000; // Extended to 15 seconds for slower networks
 
 export default function DbInitGate({ children }: DbInitGateProps) {
   const [state, setState] = useState<InitState>('initializing');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -23,12 +24,14 @@ export default function DbInitGate({ children }: DbInitGateProps) {
 
     const initialize = async () => {
       try {
+        console.log(`Initializing database (attempt ${retryCount + 1})...`);
+        
         // Set timeout
         timeoutId = setTimeout(() => {
           if (mounted && state === 'initializing') {
             console.error('Database initialization timeout');
             setState('timeout');
-            setErrorMessage('Database initialization is taking too long. This may be caused by another tab holding the database connection.');
+            setErrorMessage('Database initialization is taking too long. This may be caused by another tab holding the database connection or slow network conditions.');
           }
         }, INIT_TIMEOUT_MS);
 
@@ -36,6 +39,7 @@ export default function DbInitGate({ children }: DbInitGateProps) {
 
         if (mounted) {
           clearTimeout(timeoutId);
+          console.log('Database initialized successfully');
           setState('ready');
         }
       } catch (error) {
@@ -54,7 +58,13 @@ export default function DbInitGate({ children }: DbInitGateProps) {
       mounted = false;
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [retryCount]);
+
+  const handleRetry = () => {
+    setState('initializing');
+    setErrorMessage('');
+    setRetryCount(prev => prev + 1);
+  };
 
   if (state === 'ready') {
     return <>{children}</>;
@@ -64,8 +74,14 @@ export default function DbInitGate({ children }: DbInitGateProps) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-center space-y-4 p-6">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <div className="text-muted-foreground">Initializing database...</div>
+          <div className="relative">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <Database className="w-6 h-6 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div className="space-y-1">
+            <div className="text-foreground font-medium">Initializing database...</div>
+            <div className="text-sm text-muted-foreground">This may take a few moments</div>
+          </div>
         </div>
       </div>
     );
@@ -98,18 +114,36 @@ export default function DbInitGate({ children }: DbInitGateProps) {
                 <li>Close all other tabs with this app open</li>
                 <li>Clear your browser cache and reload</li>
                 <li>Try opening in a private/incognito window</li>
+                <li>Check your browser's IndexedDB storage settings</li>
               </ul>
             </div>
           )}
 
-          <Button
-            onClick={() => window.location.reload()}
-            className="w-full"
-            size="lg"
-          >
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Reload Page
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleRetry}
+              className="flex-1"
+              size="lg"
+              variant="outline"
+            >
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Retry
+            </Button>
+            <Button
+              onClick={() => window.location.reload()}
+              className="flex-1"
+              size="lg"
+            >
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Reload Page
+            </Button>
+          </div>
+          
+          {retryCount > 0 && (
+            <p className="text-xs text-muted-foreground">
+              Retry attempt: {retryCount}
+            </p>
+          )}
         </div>
       </div>
     </div>

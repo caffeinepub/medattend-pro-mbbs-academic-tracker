@@ -1,57 +1,55 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-17T10:10:25.243Z",
-  "summary": "REQ-1 and REQ-2 appear largely implemented: a DB init gate was added to prevent indefinite “Initializing…” and Today’s Schedule now groups consecutive same-subject/type periods with per-period attendance controls. The diff also includes several additional/unrequested changes (data model + migration and multiple domain/util updates) beyond the stated requirements.",
+  "generatedAt": "2026-02-20T18:04:21.742Z",
+  "summary": "The diff shows frontend code changes focused on improving IndexedDB initialization robustness, error handling, and timeout management. However, these changes appear to address general database initialization issues rather than specific Internet Computer deployment errors. No backend canister code changes or deployment configuration modifications are visible.",
   "missing_requirements": [
     {
       "id": "REQ-1",
-      "requirement": "Console errors include actionable context for debugging (e.g., whether the failure is blocked, open error, or upgrade error).",
-      "reason": "The diff clearly logs open error, blocked, versionchange, and a generic upgrade log, but the onupgradeneeded error-path logging/propagation is not visible due to truncation, so it’s not fully evidenced that upgrade errors are surfaced with actionable context (distinct from general init errors).",
+      "requirement": "Fix deployment error to Internet Computer network",
+      "reason": "The diff shows only frontend IndexedDB improvements. No evidence of IC-specific deployment fixes, canister initialization changes, dfx.json modifications, or backend canister code changes that would address IC deployment errors.",
       "evidence": [
-        "frontend/src/storage/db.ts (truncated)"
+        "frontend/src/storage/db.ts",
+        "frontend/src/components/DbInitGate.tsx",
+        "frontend/src/App.tsx"
       ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Ensure all canisters initialize and run properly after deployment",
+      "reason": "No backend canister code or canister initialization logic is present in the diff. Changes are limited to frontend client-side database initialization, which does not affect IC canister deployment or initialization.",
+      "evidence": []
     }
   ],
   "hallucinated_features": [
     {
-      "description": "IndexedDB schema/version migration work (DB_VERSION bump to 2 and v1->v2 migration converting attended/conducted to per-class attendance records).",
-      "reason": "BuildRequest REQ-1 asks for resilient IndexedDB initialization and error/blocked handling, not a schema/version bump or data migration.",
+      "description": "Extended IndexedDB initialization timeout to 15 seconds",
+      "reason": "This frontend database timeout extension was not requested in the BuildRequest, which specifically asks for IC deployment error fixes, not client-side database timeout improvements.",
       "evidence": [
-        "frontend/src/storage/db.ts (truncated)",
-        "frontend-file-summaries.txt (models/db summaries)"
+        "frontend/src/components/DbInitGate.tsx"
       ]
     },
     {
-      "description": "Change of attendance data model to per-class `attendanceStatus` (Present/Absent/Not Marked) and associated updates across rules/calculations.",
-      "reason": "REQ-2 is specifically about grouping consecutive classes in Today’s Schedule UI; REQ-1 is about initialization resilience. A broad model refactor is not requested in the BuildRequest.",
+      "description": "Enhanced error recovery UI with retry functionality and troubleshooting steps",
+      "reason": "Added detailed error recovery UI components and user guidance that were not part of the deployment error fix requirement. The BuildRequest focused on fixing deployment to IC, not improving client-side error UX.",
       "evidence": [
-        "frontend-file-summaries.txt (models.ts, attendanceRules.ts, MonthlySummaryCard, SubjectStatsCard, useLocalStore)"
+        "frontend/src/components/DbInitGate.tsx"
       ]
     },
     {
-      "description": "New/updated analytics and export capabilities (CSV export and PDF export utilities reflecting new per-class model).",
-      "reason": "Exports/analytics are not part of REQ-1 or REQ-2 and are not requested.",
+      "description": "Database migration logic from v1 to v2 schema",
+      "reason": "Implemented database schema migration (v1 to v2) and version bump that was not mentioned in the deployment error fix requirement.",
       "evidence": [
-        "frontend-file-summaries.txt (exportCsv.ts, exportPdf.ts)"
-      ]
-    },
-    {
-      "description": "Additional domain logic additions unrelated to the two requirements (subjects structure, eligibility math, status color classification).",
-      "reason": "Not requested by REQ-1/REQ-2; appears to extend functionality beyond fixing init hang and grouping consecutive classes.",
-      "evidence": [
-        "frontend-file-summaries.txt (subjects.ts, eligibilityMath.ts, statusColor.ts)"
+        "frontend/src/storage/db.ts"
       ]
     }
   ],
-  "confidence": 0.67,
+  "confidence": 0.85,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/App.tsx",
     "frontend/src/components/DbInitGate.tsx",
-    "frontend/src/components/TodaySchedule.tsx",
-    "frontend/src/components/attendance/ConsecutiveClassGroupCard.tsx",
-    "frontend/src/domain/groupConsecutiveTimetable.ts",
+    "frontend/src/hooks/useLocalStore.ts",
     "frontend/src/storage/db.ts",
     "project_state.json"
   ]

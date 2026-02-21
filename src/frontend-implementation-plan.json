@@ -1,59 +1,45 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "MedAttend Pro: Robust IndexedDB init + grouped consecutive classes UI",
+  "title": "Resolve deployment error",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Make IndexedDB initialization resilient so the app never stays stuck on “Initializing…”, and show a clear error UI when init is blocked or fails.",
+      "summary": "Investigate and fix deployment error ensuring proper canister initialization and frontend-backend connection",
       "acceptanceCriteria": [
-        "When IndexedDB opens successfully, the app transitions from the “Initializing…” screen to the router-rendered UI within a reasonable time (no indefinite loading).",
-        "If IndexedDB initialization is blocked (e.g., another tab holds an older connection) or fails, the app shows a dedicated error UI (not a permanent “Initializing…” state) with user-facing English text explaining the issue.",
-        "The IndexedDB open flow handles blocked/upgrade scenarios (e.g., via open request blocked handling and versionchange handling) so users are not stuck without guidance.",
-        "Console errors include actionable context for debugging (e.g., whether the failure is blocked, open error, or upgrade error)."
+        "The application successfully deploys to the Internet Computer network without errors",
+        "All canisters initialize and run properly after deployment"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/storage/db.ts",
+          "path": "frontend/src/hooks/useActor.ts",
           "operation": "modify",
-          "description": "Harden initDB to handle IndexedDB blocked/upgrade/versionchange scenarios and to always settle (resolve/reject) with explicit error reasons. Add request.onblocked handling, attach db.onversionchange to close the connection, and improve error logging so console output clearly indicates whether the failure was blocked, open error, or upgrade error."
+          "description": "Review and fix backend actor initialization to ensure proper canister ID resolution and connection handling during deployment. Add error boundaries and fallback logic for cases where backend is not yet available."
         },
         {
-          "path": "frontend/src/components/DbInitGate.tsx",
-          "operation": "create",
-          "description": "Add a small gate component that owns the “Initializing…” state, enforces a reasonable startup timeout, and renders either children (ready) or a dedicated error UI (blocked/failed/timeout) with clear English guidance. Use shadcn-ui primitives (e.g., Button) by composing existing components; do not edit frontend/src/components/ui. Verify the component's usage instructions before implementing."
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Verify Internet Identity provider configuration matches deployment environment. Ensure proper host configuration for mainnet vs local development and add connection retry logic."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Review React app initialization and ensure query client configuration is deployment-ready. Add error handling for initial render failures and verify Internet Identity provider wrapper is correctly configured."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Replace the inline init state handling with the new DbInitGate so the app reliably transitions out of “Initializing…” into the router UI or into the dedicated error UI. Ensure errors surfaced from initDB are mapped to user-facing messages and console logs include actionable context."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Group consecutive timetable entries of the same subject + type in Today’s Schedule into a single block with per-period attendance control.",
-      "acceptanceCriteria": [
-        "In Today’s Schedule, consecutive periods (adjacent by time) with the same subject + type are visually grouped into one block instead of appearing as repetitive separate cards.",
-        "The grouped UI indicates how many consecutive periods are included (e.g., “2 periods”) and shows the combined time range.",
-        "Users can still see and manage attendance per individual class occurrence within the group (e.g., via expand/collapse, stacked sub-cards, or another clear interaction).",
-        "No day-wise bulk action is introduced; marking attendance affects only the selected class occurrence(s) inside that grouped block."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/domain/groupConsecutiveTimetable.ts",
-          "operation": "create",
-          "description": "Create a pure helper that groups same-day timetable entries into consecutive runs when they are adjacent by time AND share the same subject + type. Include utilities for time comparison (HH:mm to minutes) and producing group metadata (count, combined time range) for display."
+          "description": "Verify the database initialization gate handles deployment scenarios gracefully. Ensure IndexedDB initialization does not block app startup on first deploy and add proper loading states."
         },
         {
-          "path": "frontend/src/components/attendance/ConsecutiveClassGroupCard.tsx",
-          "operation": "create",
-          "description": "Implement a grouped UI card for a consecutive run: show subject/type, combined time range, and a label like “N periods”. Provide an expand/collapse interaction to reveal per-period items, each rendering an individual ClassAttendanceCard (or an equivalent composed view) so users can mark attendance per occurrence only. Use shadcn-ui primitives (e.g., Button/Badge) by composing existing components; do not edit frontend/src/components/ui. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/TodaySchedule.tsx",
+          "path": "frontend/src/components/DbInitGate.tsx",
           "operation": "modify",
-          "description": "Update TodaySchedule to use the grouping helper and render ConsecutiveClassGroupCard for grouped runs (and/or a single-item group). Ensure attendance actions still target the specific timetable entry occurrence inside the group (no bulk/day-wise actions), and that the UI still supports showing each period’s individual status and controls."
+          "description": "Review IndexedDB initialization logic to ensure it handles fresh deployments without cached data. Add more robust error recovery and extend timeout for slower network conditions during initial deployment."
+        },
+        {
+          "path": "frontend/src/storage/db.ts",
+          "operation": "modify",
+          "description": "Verify IndexedDB initialization, upgrade handlers, and migration logic are deployment-safe. Ensure blocked event handlers allow proper database creation on first app load and add better error reporting for initialization failures."
         }
       ]
     }
