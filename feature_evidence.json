@@ -1,0 +1,41 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-fix-the-dashboard-page-frontend-src-pages-dashboardpage-tsx-to-display-a-subjectstatscard-for-community-medicine-alongside-anatomy-physiology-and-biochemistry-so-attendance-statistics-for-community-medicine-are-visible-and-up-to-date",
+      "featureTitle": "Fix the Dashboard page (frontend/src/pages/DashboardPage.tsx) to display a SubjectStatsCard for Community Medicine alongside Anatomy, Physiology, and Biochemistry, so attendance statistics for Community Medicine are visible and up to date.",
+      "files": [
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-community-medicine-is-available-as-a-filter-option-in-the-records-page-frontend-src-pages-recordspage-tsx-and-appears-correctly-in-the-analytics-page-frontend-src-pages-analyticspage-tsx-subject-wise-statistics",
+      "featureTitle": "Ensure Community Medicine is available as a filter option in the Records page (frontend/src/pages/RecordsPage.tsx) and appears correctly in the Analytics page (frontend/src/pages/AnalyticsPage.tsx) subject-wise statistics.",
+      "files": [
+        "frontend/src/pages/AnalyticsPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

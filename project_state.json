@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [],
+  "known_issues": [
+    "Community Medicine subject not appearing in non-timetable sections (e.g., dashboard attendance marking) despite being added to the timetable"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-fix-the-dashboard-page-frontend-src-pages-dashboardpage-tsx-to-display-a-subjectstatscard-for-community-medicine-alongside-anatomy-physiology-and-biochemistry-so-attendance-statistics-for-community-medicine-are-visible-and-up-to-date",
+      "title": "Fix the Dashboard page (frontend/src/pages/DashboardPage.tsx) to display a SubjectStatsCard for Community Medicine alongside Anatomy, Physiology, and Biochemistry, so attendance statistics for Community Medicine are visible and up to date.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-community-medicine-is-available-as-a-filter-option-in-the-records-page-frontend-src-pages-recordspage-tsx-and-appears-correctly-in-the-analytics-page-frontend-src-pages-analyticspage-tsx-subject-wise-statistics",
+      "title": "Ensure Community Medicine is available as a filter option in the Records page (frontend/src/pages/RecordsPage.tsx) and appears correctly in the Analytics page (frontend/src/pages/AnalyticsPage.tsx) subject-wise statistics.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Ensure Community Medicine is recognized as a distinct subject in the frontend subject definitions (frontend/src/domain/subjects.ts) with all its class types (Theory, Practical, etc.) properly enumerated, matching the same structure used by Anatomy, Physiology, and Biochemistry.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Fix the Today's Schedule section on the Dashboard (frontend/src/components/TodaySchedule.tsx) and the Add Class page (frontend/src/pages/AddClassPage.tsx) so that Community Medicine timetable entries appear in today's schedule and Community Medicine can be selected as a subject when manually adding a class log.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Audit the storage models (frontend/src/storage/models.ts) to confirm that the ClassLog and TimetableEntry subject type unions include 'Community Medicine' as a valid literal, and update them if missing so that storing and retrieving Community Medicine records works correctly.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Fix Community Medicine visibility across all app sections",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

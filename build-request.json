@@ -1,0 +1,113 @@
+{
+  "kind": "build_request",
+  "title": "Fix Community Medicine visibility across all app sections",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Ensure Community Medicine is recognized as a distinct subject in the frontend subject definitions (frontend/src/domain/subjects.ts) with all its class types (Theory, Practical, etc.) properly enumerated, matching the same structure used by Anatomy, Physiology, and Biochemistry.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "its added in time table section with other subjects but in other sections it's not showing community medicine as different subject"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Community Medicine appears as a selectable subject in the subjects list used throughout the app.",
+        "Community Medicine has the same class type options (e.g., Theory, Practical) available as other subjects.",
+        "The subject definition in subjects.ts includes Community Medicine with proper category mappings (Theory/Practical thresholds)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Fix the Dashboard page (frontend/src/pages/DashboardPage.tsx) to display a SubjectStatsCard for Community Medicine alongside Anatomy, Physiology, and Biochemistry, so attendance statistics for Community Medicine are visible and up to date.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "I cannot mark its attendance in dashboard tab kindly fix"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A SubjectStatsCard for Community Medicine is rendered on the Dashboard.",
+        "The card shows correct attended/conducted counts and attendance percentage for Community Medicine.",
+        "The card reflects the same threshold rules (75% Theory, 80% Practical) as other subjects."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Fix the Today's Schedule section on the Dashboard (frontend/src/components/TodaySchedule.tsx) and the Add Class page (frontend/src/pages/AddClassPage.tsx) so that Community Medicine timetable entries appear in today's schedule and Community Medicine can be selected as a subject when manually adding a class log.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "I cannot mark its attendance in dashboard tab kindly fix",
+          "in other sections it's not showing community medicine as different subject"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Community Medicine timetable entries scheduled for today appear in TodaySchedule with Present/Absent action buttons.",
+        "Community Medicine is listed as a selectable subject in the Add Class form.",
+        "Marking attendance for a Community Medicine class log correctly updates attendance statistics."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Ensure Community Medicine is available as a filter option in the Records page (frontend/src/pages/RecordsPage.tsx) and appears correctly in the Analytics page (frontend/src/pages/AnalyticsPage.tsx) subject-wise statistics.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "in other sections it's not showing community medicine as different subject"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Community Medicine appears in the subject filter dropdown on the Records page.",
+        "Records logged under Community Medicine are retrievable by filtering for that subject.",
+        "Analytics page shows Community Medicine in the per-subject attendance breakdown chart."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Audit the storage models (frontend/src/storage/models.ts) to confirm that the ClassLog and TimetableEntry subject type unions include 'Community Medicine' as a valid literal, and update them if missing so that storing and retrieving Community Medicine records works correctly.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "in other sections it's not showing community medicine as different subject"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Subject type union in models.ts includes 'Community Medicine'.",
+        "TimetableEntry and ClassLog records with subject 'Community Medicine' can be stored and retrieved without type errors.",
+        "No TypeScript type errors arise from using Community Medicine as a subject value."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not alter the immutable frontend paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Do not change existing attendance threshold logic (75% Theory, 80% Practical).",
+    "Backend data structures already include Community Medicine — do not remove or rename existing backend entries."
+  ],
+  "nonGoals": [
+    "Adding new subjects beyond Community Medicine.",
+    "Redesigning the UI layout or visual theme.",
+    "Changing the backend actor schema or migration logic.",
+    "Modifying AETCOM-specific logic unless it directly blocks Community Medicine attendance tracking."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

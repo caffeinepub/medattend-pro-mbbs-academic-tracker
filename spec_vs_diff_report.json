@@ -1,0 +1,71 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T10:22:31.938Z",
+  "summary": "The diff implements most requirements for Community Medicine visibility. Key files like DashboardPage.tsx, AnalyticsPage.tsx, and attendanceRules.ts are directly modified to include Community Medicine. Supporting evidence in frontend-file-summaries.txt confirms changes to models.ts, subjects.ts, AddClassPage.tsx, TodaySchedule.tsx, and RecordsPage.tsx. However, the actual source diffs for models.ts, subjects.ts, RecordsPage.tsx, TodaySchedule.tsx, and AddClassPage.tsx are not present in the diff — only their summaries in the txt file — making it impossible to fully verify REQ-3, REQ-4, and REQ-5 from direct code evidence.",
+  "missing_requirements": [
+    {
+      "id": "REQ-5",
+      "requirement": "The Subject type union in models.ts includes 'Community Medicine'; TimetableEntry and ClassLog records with subject 'Community Medicine' can be stored and retrieved without type errors.",
+      "reason": "frontend/src/storage/models.ts is not directly modified in the diff (no source code shown). Only a summary entry in frontend-file-summaries.txt claims Community Medicine was added to SubjectName. Without the actual diff of models.ts, the change cannot be verified.",
+      "evidence": [
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Community Medicine is recognized as a distinct subject in frontend/src/domain/subjects.ts with all class types properly enumerated.",
+      "reason": "frontend/src/domain/subjects.ts is not directly modified in the diff. Only a summary in frontend-file-summaries.txt claims Community Medicine was added. The actual code change is not visible to confirm proper structure, thresholds, and category mappings.",
+      "evidence": [
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Fix TodaySchedule.tsx and AddClassPage.tsx so Community Medicine entries appear in today's schedule and can be selected when adding a class log.",
+      "reason": "Neither frontend/src/components/TodaySchedule.tsx nor frontend/src/pages/AddClassPage.tsx appear in the actual file diffs. Only summaries in frontend-file-summaries.txt mention these were updated. The actual source changes cannot be verified.",
+      "evidence": [
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Community Medicine appears in the subject filter dropdown on the Records page (frontend/src/pages/RecordsPage.tsx).",
+      "reason": "frontend/src/pages/RecordsPage.tsx is not present in the modified files list. Only the file summary mentions it indirectly. The Analytics page (AnalyticsPage.tsx) is modified and does include Community Medicine, but RecordsPage.tsx changes cannot be confirmed.",
+      "evidence": [
+        "frontend-file-summaries.txt"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "AETCOM-specific stats (attended/conducted) calculated per-subject and displayed in the Analytics page subject comparison.",
+      "reason": "The build request explicitly states not to modify AETCOM-specific logic unless it directly blocks Community Medicine attendance tracking. The AnalyticsPage.tsx diff adds AETCOM breakdown per subject which goes beyond what was requested.",
+      "evidence": [
+        "frontend/src/pages/AnalyticsPage.tsx"
+      ]
+    },
+    {
+      "description": "duration field added to ClassLog and TimetableEntry interfaces in models.ts.",
+      "reason": "The build request does not mention adding a duration field to data models. The frontend-file-summaries.txt states duration field was added for time tracking, which is not part of any requirement.",
+      "evidence": [
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "description": "Multiple consecutive periods functionality and calculated end times added to AddClassPage.",
+      "reason": "The build request only asks for Community Medicine to be selectable in the Add Class form. Adding multiple consecutive periods and calculated end times is a new feature not requested.",
+      "evidence": [
+        "frontend-file-summaries.txt"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/domain/attendanceRules.ts",
+    "frontend/src/pages/AnalyticsPage.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T10:22:31.941Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 5,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Ensure Community Medicine is recognized as a distinct subject in the frontend subject definitions (frontend/src/domain/subjects.ts) with all its class types (Theory, Practical, etc.) properly enumerated, matching the same structure used by Anatomy, Physiology, and Biochemistry.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/domain/subjects.ts"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Fix the Dashboard page (frontend/src/pages/DashboardPage.tsx) to display a SubjectStatsCard for Community Medicine alongside Anatomy, Physiology, and Biochemistry, so attendance statistics for Community Medicine are visible and up to date.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/DashboardPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/DashboardPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Fix the Today's Schedule section on the Dashboard (frontend/src/components/TodaySchedule.tsx) and the Add Class page (frontend/src/pages/AddClassPage.tsx) so that Community Medicine timetable entries appear in today's schedule and Community Medicine can be selected as a subject when manually adding a class log.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/TodaySchedule.tsx",
+          "frontend/src/pages/AddClassPage.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Ensure Community Medicine is available as a filter option in the Records page (frontend/src/pages/RecordsPage.tsx) and appears correctly in the Analytics page (frontend/src/pages/AnalyticsPage.tsx) subject-wise statistics.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/RecordsPage.tsx",
+          "frontend/src/pages/AnalyticsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/AnalyticsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Audit the storage models (frontend/src/storage/models.ts) to confirm that the ClassLog and TimetableEntry subject type unions include 'Community Medicine' as a valid literal, and update them if missing so that storing and retrieving Community Medicine records works correctly.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/storage/models.ts"
+        ],
+        "matchedFiles": []
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/domain/attendanceRules.ts",
+    "frontend/src/pages/AnalyticsPage.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
